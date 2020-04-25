@@ -1,21 +1,21 @@
 {
-	"include": [
-		"src/**/*"
-	],
-	"exclude": [],
-	"compilerOptions": {
-		/* Basic Options */
-		"target": "es5",
-		"module": "commonjs",
-		"baseUrl": "./",
-		"outDir": "./build",
-		"sourceMap": true,
-		"strict": true,
-		"moduleResolution": "node",
-		"esModuleInterop": true,
-		"lib": [
-			"es2015"
-		],
-		"declaration": true,
-	}
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [],
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "ES6",
+    "module": "commonjs",
+    "baseUrl": "./",
+    "outDir": "./build",
+    "sourceMap": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": [
+      "ES6"
+    ],
+    "declaration": true,
+  }
 }
