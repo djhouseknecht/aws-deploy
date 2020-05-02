@@ -27,16 +27,21 @@ export const config = new UnifiedEnv({
   /* *************** */
 
   /* ALL */
+  help: { required: false, type: Boolean },
   version: { required: false },
 
+  /* DELETE */
+  delete: { required: false, type: Boolean },
+
   /* UPLOAD */
+  upload: { required: false, type: Boolean },
   overwrite: { required: false, type: Boolean },
   list: { required: false, type: Boolean },
   history: { required: false, type: Boolean },
 
   /* DEPLOY */
-  clean: { required: false, type: Boolean },
-  force: { required: false, type: Boolean },
+  // clean: { required: false, type: Boolean },
+  // force: { required: false, type: Boolean },
 })
   .env()
   .file()

@@ -2,7 +2,7 @@ import { writeFileSync } from 'fs';
 import { VERSION_FILE, config, VERSIONS_FILE } from './config';
 import { getObjectFromBucket } from './bucket';
 import { log } from './logger';
-import { IVersionHistoryFile, IVersionFile, VersionAction, IVersionHistoryEntry } from './types';
+import { IVersionHistoryFile, IVersionFile, VersionAction } from './types';
 
 const bucket = config.AWS_VERSIONS_BUCKET;
 const versionsFolder = config.AWS_VERSIONS_FOLDER || '';

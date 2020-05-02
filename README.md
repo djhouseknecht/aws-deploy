@@ -55,6 +55,10 @@ AWS_VERSIONS_BUCKET=your-versions-bucket # required
 
 # this is an optional subfolder of the versions bucket
 AWS_VERSIONS_FOLDER=main-site/versions # optional
+
+# this is the local directory of the files you would like to upload
+#   for example, all files in the `dist/` directory
+DIR_TO_UPLOAD=dist/ # required
 ```
 
 `aws-deploy` will use the indicated bucket and optional folder to keep all versions. For the example of _mywebsite.com_, and the following config: 
@@ -72,11 +76,14 @@ S3
     └── mywebsite.com
         └── versions
             ├── 1.0.0
-            │   └── ...1.0.0's static files
+            │   ├── ...1.0.0's static files
+            │   └── version.json (file to track this version and its files)
             ├── 1.0.1
-            │   └── ...1.0.1's static files
+            │   ├── ...1.1.0's static files
+            │   └── version.json
             ├── 2.0.0
-            │   └── ...2.0.0's static files
+            │   ├── ...2.0.0's static files
+            │   └── version.json
             └── versions.json (file to track upload information)
 ```
 
@@ -86,7 +93,9 @@ All commands called from the root of the project.
 
 ``` sh
 # upload a new version to s3
-npx s3-upload --overwrite # optional, flag
+npx s3-upload \
+  --version \ # optional, determine version to upload
+  --overwrite  # optional, if the version already exists, overwrite it
 
 # list available versions
 npx s3-upload --list
@@ -94,11 +103,11 @@ npx s3-upload --list
 
 #### Uploading
 
-`aws-deploy` will pull the current version from `./package.json`. It will check the configured static uploads bucket to see if that version exists. 
+`aws-deploy` will pull either use the version passed in from `--version` _or_ the current version from `./package.json`. It will check the configured static uploads bucket to see if that version exists. 
 
-**If the version exists** - if the `--overwrite` flag is not set, it log an error and not upload the version. If the `--overwrite` flag is present, it will **delete** the previous version and upload the new version (updating the `versions.json`).
+**If the version exists** - and the `--overwrite` flag is not set, it will log an error and not upload the version. If the `--overwrite` flag is present, it will **delete** the previous version and upload the new version (updating the `versions.json`).
 
-> If the version in `package.json` is the currently deployed version, it will error and not overwrite the version even if `--overwrite` is set
+> If the version to be overwritten is the currently deployed version, it will error and not overwrite the version even if `--overwrite` is set. This is so the version in production always has its backup files. 
 
 Once a version is uploaded, the `versions.json` file will be updated in the bucket. 
 

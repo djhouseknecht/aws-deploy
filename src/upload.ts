@@ -10,13 +10,13 @@
 import { config, VERSION } from './utils/config';
 import { getVersionHistoryFileFromS3, updateVersionHistory } from './utils/version';
 import { log } from './utils/logger';
-import { uploadVersionDirectory, uploadFileFromString } from './utils/bucket';
-import { IVersionHistoryEntry, IVersionHistoryFile } from './utils/types';
+import { uploadFileFromString } from './utils/bucket';
+import { IVersionHistoryFile } from './utils/types';
 
 /**
  * Upload a version to S3
  */
-async function upload () {
+export async function upload () {
   const overwrite = config.overwrite;
   const versionHistory = await getVersionHistoryFileFromS3();
   const existingVersion = versionHistory.availableVersions.includes(VERSION);
@@ -59,7 +59,7 @@ async function upload () {
 /**
  * List available versions in S3
  */
-async function list () {
+export async function list () {
   log('info',
     '***************************'
   );
@@ -83,15 +83,3 @@ async function list () {
     '***************************'
   );
 }
-
-async function run () {
-  /* if we are listing available versions */
-  if (config.list || config.history) {
-    return list();
-  }
-
-  /* upload the version */
-  return upload();
-}
-
-run();

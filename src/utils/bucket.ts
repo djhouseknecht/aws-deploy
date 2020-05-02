@@ -1,14 +1,13 @@
 import { createReadStream } from 'fs';
-import { basename, join, resolve } from 'path';
+import { basename, resolve } from 'path';
 import mimeTypes from 'mime-types'
+import S3 from 'aws-sdk/clients/s3';
 
-import { s3 } from './aws';
 import { log } from './logger';
 import { walkDir } from './utils';
-import { config, VERSION, VERSION_FILE } from './config';
+import { config, VERSION, VERSION_FILE, s3 } from './config';
 import { IVersionFile } from './types';
 import { createVersionFile } from './version';
-import S3 from 'aws-sdk/clients/s3';
 
 /**
  * Fetch a single item from a S3 bucket. 
@@ -110,8 +109,8 @@ async function uploadFileFromPath (file: string): Promise<any> {
 }
 
 function uploadToS3<T = any> (params: S3.Types.PutObjectRequest): Promise<T> {
-  log('error', 'upload is turned off');
   log('info', 'uploadToS3 called with', params);
+  log('error', 'upload is turned off');
   return Promise.resolve({} as T);
 
   return s3
