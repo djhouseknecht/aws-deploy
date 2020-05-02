@@ -3,9 +3,16 @@
   "version": "0.0.1",
   "description": "AWS deployment utilities to deploy and manager code in AWS services like S3 and Cloudfront",
   "main": "build/index.js",
+  "bin": {
+    "s3-upload": "build/s3-upload.js",
+    "s3-deploy": "build/s3-deploy.js"
+  },
   "scripts": {
     "build": "tsc --project .",
+    "upload": "ts-node src/s3-upload",
+    "deploy": "ts-node src/s3-deploy",
     "test": "jest",
+    "test:watch": "jest --collectCoverage=false --watch",
     "lint": "tslint --project . --config tslint.json",
     "commit": "git-cz",
     "semantic-release": "semantic-release"
@@ -16,15 +23,22 @@
       "pre-push": "npm run lint && npm run test"
     }
   },
+  "dependencies": {
+    "aws-sdk": "^2.663.0",
+    "mime-types": "^2.1.27",
+    "unified-env": "^1.1.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@types/jest": "^25.2.1",
+    "@types/mime-types": "^2.1.0",
     "babel-jest": "^25.4.0",
     "husky": "^4.2.5",
     "jest": "^25.4.0",
     "semantic-release": "^17.0.2",
     "ts-jest": "^25.4.0",
+    "ts-node": "^8.9.1",
     "tslint": "^6.1.1",
     "typescript": "^3.8.3"
   },
@@ -38,8 +52,11 @@
     "url": "https://github.com/djhouseknecht/aws-deploy.git"
   },
   "keywords": [
-    "open-source",
-    "reference"
+    "aws",
+    "s3",
+    "cloudfront",
+    "deploy",
+    "cdn"
   ],
   "author": "David Houseknecht <david.houseknecht.dev@gmail.com>",
   "license": "MIT",
